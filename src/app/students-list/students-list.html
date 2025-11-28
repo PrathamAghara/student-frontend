@@ -1,0 +1,101 @@
+<div class="container mt-4">
+
+  <div class="row">
+    <div class="col-md-5">
+      <!-- ADD / EDIT CARD -->
+      <div class="card shadow-sm">
+        <div class="card-header">
+          <h4 class="mb-0">{{ editing ? "Edit Student" : "Add Student" }}</h4>
+        </div>
+
+        <div class="card-body">
+          <form (ngSubmit)="saveStudent()" #studentForm="ngForm">
+
+            <div class="mb-3">
+              <label class="form-label">Name</label>
+              <input
+                type="text"
+                class="form-control"
+                name="name"
+                required
+                [(ngModel)]="currentStudent.name" />
+            </div>
+
+            <div class="mb-3">
+              <label class="form-label">Mobile</label>
+              <input
+                type="text"
+                class="form-control"
+                name="mobile_number"
+                [(ngModel)]="currentStudent.mobile_number" />
+            </div>
+
+            <div class="mb-3">
+              <label class="form-label">Email</label>
+              <input
+                type="email"
+                class="form-control"
+                name="email"
+                [(ngModel)]="currentStudent.email" />
+            </div>
+
+            <button type="submit" class="btn btn-primary me-2" [disabled]="studentForm.invalid">
+              {{ editing ? "Update" : "Add" }}
+            </button>
+
+            <button type="button" class="btn btn-secondary" (click)="cancel()">
+              Clear
+            </button>
+
+          </form>
+        </div>
+      </div>
+    </div>
+
+    <!-- STUDENT TABLE -->
+    <div class="col-md-7">
+      <div class="card shadow-sm">
+        <div class="card-header">
+          <h4 class="mb-0">Student List</h4>
+        </div>
+
+        <div class="card-body p-0">
+
+          <div *ngIf="isLoading" class="p-3">Loading...</div>
+          <div *ngIf="!isLoading && errorMessage" class="p-3 text-danger">
+            {{ errorMessage }}
+          </div>
+
+          <table *ngIf="!isLoading && !errorMessage"
+                 class="table table-striped mb-0 table-bordered">
+
+            <thead class="table-light">
+              <tr>
+                <th>Id</th>
+                <th>Name</th>
+                <th>Mobile</th>
+                <th>Email</th>
+                <th class="text-center">Actions</th>
+              </tr>
+            </thead>
+
+            <tbody>
+              <tr *ngFor="let s of students">
+                <td>{{ s.id }}</td>
+                <td>{{ s.name }}</td>
+                <td>{{ s.mobile_number }}</td>
+                <td>{{ s.email }}</td>
+                <td class="text-center">
+                  <button class="btn btn-sm btn-warning me-2" (click)="startEdit(s)">Edit</button>
+                  <button class="btn btn-sm btn-danger" (click)="deleteStudent(s.id)">Delete</button>
+                </td>
+              </tr>
+            </tbody>
+
+          </table>
+        </div>
+      </div>
+    </div>
+  </div>
+
+</div>

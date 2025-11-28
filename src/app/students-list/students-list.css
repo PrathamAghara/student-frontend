@@ -1,0 +1,15 @@
+.form-card {
+  border: 1px solid #ccc;
+  padding: 12px;
+  margin-bottom: 16px;
+  max-width: 400px;
+}
+
+.form-card div {
+  margin-bottom: 8px;
+}
+
+.form-card label {
+  display: inline-block;
+  width: 80px;
+}
