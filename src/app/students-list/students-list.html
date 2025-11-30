@@ -1,8 +1,8 @@
 <div class="container mt-4">
 
   <div class="row">
-    <div class="col-md-5">
-      <!-- ADD / EDIT CARD -->
+    <!-- LEFT: ADD / EDIT FORM (ADMIN ONLY) -->
+    <div class="col-md-5" *ngIf="isAdmin()">
       <div class="card shadow-sm">
         <div class="card-header">
           <h4 class="mb-0">{{ editing ? "Edit Student" : "Add Student" }}</h4>
@@ -52,8 +52,9 @@
       </div>
     </div>
 
-    <!-- STUDENT TABLE -->
-    <div class="col-md-7">
+    <!-- RIGHT: STUDENT TABLE -->
+    <!-- full width if not admin -->
+    <div [class.col-md-7]="isAdmin()" [class.col-md-12]="!isAdmin()">
       <div class="card shadow-sm">
         <div class="card-header">
           <h4 class="mb-0">Student List</h4>
@@ -75,7 +76,8 @@
                 <th>Name</th>
                 <th>Mobile</th>
                 <th>Email</th>
-                <th class="text-center">Actions</th>
+                <!-- Actions header only for Admin -->
+                <th class="text-center" *ngIf="isAdmin()">Actions</th>
               </tr>
             </thead>
 
@@ -85,7 +87,9 @@
                 <td>{{ s.name }}</td>
                 <td>{{ s.mobile_number }}</td>
                 <td>{{ s.email }}</td>
-                <td class="text-center">
+
+                <!-- Actions only for Admin -->
+                <td class="text-center" *ngIf="isAdmin()">
                   <button class="btn btn-sm btn-warning me-2" (click)="startEdit(s)">Edit</button>
                   <button class="btn btn-sm btn-danger" (click)="deleteStudent(s.id)">Delete</button>
                 </td>

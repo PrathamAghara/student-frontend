@@ -1,8 +1,10 @@
 import { Component, OnInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
+
 import { StudentService } from '../services/student.service';
 import { Student } from '../models/student.model';
+import { AuthService } from '../services/auth.service';
 
 @Component({
   selector: 'app-students-list',
@@ -21,12 +23,21 @@ export class StudentsListComponent implements OnInit {
   currentStudent: Student = this.getEmptyStudent();
   editing = false;   // false = Add, true = Edit
 
-  constructor(private studentService: StudentService) {}
+  constructor(
+    private studentService: StudentService,
+    private authService: AuthService
+  ) {}
 
   ngOnInit(): void {
     this.loadStudents();
   }
 
+  // ------- ROLE CHECK --------
+  isAdmin(): boolean {
+    return this.authService.isAdmin();
+  }
+
+  // ------- API CALLS ---------
   loadStudents(): void {
     this.isLoading = true;
     this.studentService.getStudents().subscribe({
@@ -60,8 +71,7 @@ export class StudentsListComponent implements OnInit {
 
   startEdit(student: Student): void {
     this.editing = true;
-    // copy to avoid binding directly to table row
-    this.currentStudent = { ...student };
+    this.currentStudent = { ...student }; // copy
   }
 
   saveStudent(): void {

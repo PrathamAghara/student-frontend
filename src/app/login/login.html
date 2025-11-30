@@ -1,0 +1,63 @@
+<div class="d-flex justify-content-center align-items-center vh-100 bg-light">
+
+  <div class="card shadow p-4" style="width: 380px; border-radius: 10px;">
+    
+    <h3 class="text-center mb-3">Login</h3>
+
+    <form #loginForm="ngForm" (ngSubmit)="onLogin(loginForm)">
+
+      <!-- USERNAME -->
+      <div class="mb-3">
+        <label class="form-label">Username</label>
+        <input
+          type="text"
+          name="username"
+          class="form-control"
+          required
+          ngModel
+          placeholder="Enter username">
+      </div>
+
+      <!-- PASSWORD -->
+      <div class="mb-3">
+        <label class="form-label">Password</label>
+        <input
+          type="password"
+          name="password"
+          class="form-control"
+          required
+          ngModel
+          placeholder="Enter password">
+      </div>
+
+      <!-- USER ROLE -->
+      <div class="mb-3">
+        <label class="form-label">Role</label>
+        <select
+          class="form-select"
+          name="userRole"
+          required
+          ngModel>
+          <option value="" disabled selected>Select Role</option>
+          <option value="admin">Admin</option>
+          <option value="user">User</option>
+        </select>
+      </div>
+
+      <!-- ERROR MESSAGE -->
+      <div *ngIf="errorMessage" class="alert alert-danger py-2">
+        {{ errorMessage }}
+      </div>
+
+      <!-- LOGIN BUTTON -->
+      <button type="submit"
+              class="btn btn-primary w-100"
+              [disabled]="loginForm.invalid">
+        Login
+      </button>
+
+    </form>
+
+  </div>
+
+</div>
