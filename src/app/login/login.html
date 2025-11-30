@@ -1,63 +1,70 @@
-<div class="d-flex justify-content-center align-items-center vh-100 bg-light">
+<div class="min-vh-100 d-flex justify-content-center align-items-center bg-light">
+  <div class="card shadow-lg border-0 login-card">
+    <div class="card-body p-4 p-md-5">
+      <h2 class="text-center mb-4 fw-bold">Login</h2>
 
-  <div class="card shadow p-4" style="width: 380px; border-radius: 10px;">
-    
-    <h3 class="text-center mb-3">Login</h3>
+      <form #loginForm="ngForm" (ngSubmit)="onLogin(loginForm)" novalidate>
 
-    <form #loginForm="ngForm" (ngSubmit)="onLogin(loginForm)">
+        <!-- USERNAME -->
+        <div class="mb-3">
+          <label class="form-label">Username</label>
+          <input
+            type="text"
+            name="username"
+            class="form-control"
+            [(ngModel)]="model.username"
+            required
+            placeholder="Enter username">
+          <div class="form-text text-danger" *ngIf="loginForm.submitted && !model.username">
+            Username is required
+          </div>
+        </div>
 
-      <!-- USERNAME -->
-      <div class="mb-3">
-        <label class="form-label">Username</label>
-        <input
-          type="text"
-          name="username"
-          class="form-control"
-          required
-          ngModel
-          placeholder="Enter username">
-      </div>
+        <!-- PASSWORD -->
+        <div class="mb-3">
+          <label class="form-label">Password</label>
+          <input
+            type="password"
+            name="password"
+            class="form-control"
+            [(ngModel)]="model.password"
+            required
+            placeholder="Enter password">
+          <div class="form-text text-danger" *ngIf="loginForm.submitted && !model.password">
+            Password is required
+          </div>
+        </div>
 
-      <!-- PASSWORD -->
-      <div class="mb-3">
-        <label class="form-label">Password</label>
-        <input
-          type="password"
-          name="password"
-          class="form-control"
-          required
-          ngModel
-          placeholder="Enter password">
-      </div>
+        <!-- ROLE -->
+        <div class="mb-3">
+          <label class="form-label">Role</label>
+          <select
+            class="form-select"
+            name="userrole"
+            [(ngModel)]="model.userrole"
+            required>
+            <option value="">Select Role</option>
+            <option value="Admin">Admin</option>
+            <option value="User">User</option>
+          </select>
+          <div class="form-text text-danger" *ngIf="loginForm.submitted && !model.userrole">
+            Role is required
+          </div>
+        </div>
 
-      <!-- USER ROLE -->
-      <div class="mb-3">
-        <label class="form-label">Role</label>
-        <select
-          class="form-select"
-          name="userRole"
-          required
-          ngModel>
-          <option value="" disabled selected>Select Role</option>
-          <option value="admin">Admin</option>
-          <option value="user">User</option>
-        </select>
-      </div>
+        <!-- ERROR FROM BACKEND -->
+        <div *ngIf="errorMessage" class="alert alert-danger py-2">
+          {{ errorMessage }}
+        </div>
 
-      <!-- ERROR MESSAGE -->
-      <div *ngIf="errorMessage" class="alert alert-danger py-2">
-        {{ errorMessage }}
-      </div>
+        <!-- BUTTONS -->
+        <button
+          type="submit"
+          class="btn btn-primary w-100">
+          Login
+        </button>
 
-      <!-- LOGIN BUTTON -->
-      <button type="submit"
-              class="btn btn-primary w-100"
-              [disabled]="loginForm.invalid">
-        Login
-      </button>
-
-    </form>
-
+      </form>
+    </div>
   </div>
-
 </div>

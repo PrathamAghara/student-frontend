@@ -10,8 +10,14 @@ import { CommonModule } from '@angular/common';
     imports: [CommonModule, FormsModule],
 })
 export class LoginComponent {
-  
-  errorMessage = '';
+  model = {
+  username: '',
+  password: '',
+  userrole: ''
+};
+
+errorMessage = '';
+
 
   constructor(private authService: AuthService, private router: Router) {}
 

@@ -11,7 +11,7 @@ import { AuthService } from '../services/auth.service';
   standalone: true,
   imports: [CommonModule, FormsModule],
   templateUrl: './students-list.html',
-  styleUrl: './students-list.css'
+  styleUrls: ['./students-list.css']
 })
 export class StudentsListComponent implements OnInit {
 
@@ -25,7 +25,7 @@ export class StudentsListComponent implements OnInit {
 
   constructor(
     private studentService: StudentService,
-    private authService: AuthService
+    public authService: AuthService
   ) {}
 
   ngOnInit(): void {

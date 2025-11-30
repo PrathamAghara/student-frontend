@@ -1,11 +1,23 @@
 <div class="container mt-4">
 
+  <div class="d-flex justify-content-between align-items-center mb-3">
+    <h3 class="mb-0">Student Management</h3>
+    <div>
+      <span class="me-3">
+        Logged in as <strong>{{ authService.getUserRole() }}</strong>
+      </span>
+      <button class="btn btn-outline-danger btn-sm" (click)="authService.logout();">
+        Logout
+      </button>
+    </div>
+  </div>
+
   <div class="row">
     <!-- LEFT: ADD / EDIT FORM (ADMIN ONLY) -->
-    <div class="col-md-5" *ngIf="isAdmin()">
+    <div class="col-md-5 mb-3" *ngIf="isAdmin()">
       <div class="card shadow-sm">
         <div class="card-header">
-          <h4 class="mb-0">{{ editing ? "Edit Student" : "Add Student" }}</h4>
+          <h5 class="mb-0">{{ editing ? "Edit Student" : "Add Student" }}</h5>
         </div>
 
         <div class="card-body">
@@ -39,29 +51,30 @@
                 [(ngModel)]="currentStudent.email" />
             </div>
 
-            <button type="submit" class="btn btn-primary me-2" [disabled]="studentForm.invalid">
+            <button type="submit"
+                    class="btn btn-primary me-2"
+                    [disabled]="studentForm.invalid">
               {{ editing ? "Update" : "Add" }}
             </button>
 
-            <button type="button" class="btn btn-secondary" (click)="cancel()">
+            <button type="button"
+                    class="btn btn-secondary"
+                    (click)="cancel()">
               Clear
             </button>
-
           </form>
         </div>
       </div>
     </div>
 
     <!-- RIGHT: STUDENT TABLE -->
-    <!-- full width if not admin -->
     <div [class.col-md-7]="isAdmin()" [class.col-md-12]="!isAdmin()">
       <div class="card shadow-sm">
         <div class="card-header">
-          <h4 class="mb-0">Student List</h4>
+          <h5 class="mb-0">Student List</h5>
         </div>
 
         <div class="card-body p-0">
-
           <div *ngIf="isLoading" class="p-3">Loading...</div>
           <div *ngIf="!isLoading && errorMessage" class="p-3 text-danger">
             {{ errorMessage }}
@@ -76,7 +89,6 @@
                 <th>Name</th>
                 <th>Mobile</th>
                 <th>Email</th>
-                <!-- Actions header only for Admin -->
                 <th class="text-center" *ngIf="isAdmin()">Actions</th>
               </tr>
             </thead>
@@ -88,10 +100,15 @@
                 <td>{{ s.mobile_number }}</td>
                 <td>{{ s.email }}</td>
 
-                <!-- Actions only for Admin -->
                 <td class="text-center" *ngIf="isAdmin()">
-                  <button class="btn btn-sm btn-warning me-2" (click)="startEdit(s)">Edit</button>
-                  <button class="btn btn-sm btn-danger" (click)="deleteStudent(s.id)">Delete</button>
+                  <button class="btn btn-sm btn-warning me-2"
+                          (click)="startEdit(s)">
+                    Edit
+                  </button>
+                  <button class="btn btn-sm btn-danger"
+                          (click)="deleteStudent(s.id)">
+                    Delete
+                  </button>
                 </td>
               </tr>
             </tbody>
