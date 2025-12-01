@@ -1,7 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
-
 import { StudentService } from '../services/student.service';
 import { Student } from '../models/student.model';
 import { AuthService } from '../services/auth.service';
@@ -37,6 +36,7 @@ export class StudentsListComponent implements OnInit {
     return this.authService.isAdmin();
   }
 
+  
   // ------- API CALLS ---------
   loadStudents(): void {
     this.isLoading = true;

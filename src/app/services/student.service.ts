@@ -7,23 +7,25 @@ import { Student } from '../models/student.model';
   providedIn: 'root'
 })
 export class StudentService {
-  private apiUrl = 'https://localhost:7211/api/Student'; // make sure this matches your API
+
+  private baseUrl = 'https://localhost:7211/api/Student';
 
   constructor(private http: HttpClient) {}
 
   getStudents(): Observable<Student[]> {
-    return this.http.get<Student[]>(this.apiUrl);
+    // 👇 this is your line, moved into the service
+    return this.http.get<Student[]>(this.baseUrl);
   }
 
   addStudent(student: Student): Observable<Student> {
-    return this.http.post<Student>(this.apiUrl, student);
+    return this.http.post<Student>(this.baseUrl, student);
   }
 
   updateStudent(student: Student): Observable<void> {
-    return this.http.put<void>(`${this.apiUrl}/${student.id}`, student);
+    return this.http.put<void>(`${this.baseUrl}/${student.id}`, student);
   }
 
   deleteStudent(id: number): Observable<void> {
-    return this.http.delete<void>(`${this.apiUrl}/${id}`);
+    return this.http.delete<void>(`${this.baseUrl}/${id}`);
   }
 }

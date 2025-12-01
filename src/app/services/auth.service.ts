@@ -1,3 +1,4 @@
+// src/app/services/auth.service.ts
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { Observable } from 'rxjs';
@@ -12,27 +13,44 @@ export class AuthService {
 
   constructor(private http: HttpClient) { }
 
+  // ---- LOGIN ----
   login(request: LoginRequest): Observable<LoginResponse> {
     return this.http.post<LoginResponse>(`${this.baseUrl}/login`, request);
   }
 
+  // ---- SAVE USER DATA + TOKEN ----
   setSession(res: LoginResponse) {
+
+    // save username & role
     localStorage.setItem('username', res.username);
     localStorage.setItem('userRole', res.userRole);
+
+    // save JWT token
+    if (res.token) {
+      localStorage.setItem('token', res.token);
+    }
   }
 
+  // ---- GET TOKEN ----
+  getToken(): string | null {
+    return localStorage.getItem('token');
+  }
+
+  // ---- ROLE HELPERS ----
   getUserRole(): string | null {
     return localStorage.getItem('userRole');
-  }
-
-  logout() {
-    localStorage.clear();
   }
 
   isAdmin(): boolean {
     return (this.getUserRole() || '').toLowerCase() === 'admin';
   }
-   isUser(): boolean {
+
+  isUser(): boolean {
     return (this.getUserRole() || '').toLowerCase() === 'user';
+  }
+
+  // ---- LOGOUT ----
+  logout() {
+    localStorage.clear();
   }
 }
